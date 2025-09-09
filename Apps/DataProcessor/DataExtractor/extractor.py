@@ -25,7 +25,7 @@ def ExtraxtContent():
                 break 
         return numbers
     except FileNotFoundError:
-        print(f"Error: No se encontró el archivo '{nom}'")
+        print(f"Error: No se encontró el archivo 'datos_generados.txt'")
         return []
 
 
