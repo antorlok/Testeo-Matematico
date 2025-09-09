@@ -1,7 +1,7 @@
 import numpy as np
 import random
 
-def leer(nom):
+def ExtraxtContent(nom):
     try:
         numbers = [None] * 250000 
         i = 0
