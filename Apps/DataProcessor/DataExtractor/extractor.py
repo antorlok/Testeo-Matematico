@@ -1,23 +1,28 @@
 import numpy as np
 import random
+from Common.Repositories.FileManager import FileManager
 
-def ExtraxtContent(nom):
+
+
+def ExtraxtContent():
     try:
-        numbers = [None] * 250000 
+        path= "./Apps/DataProcessor/DataExtractor/Data/"
+        fileManager = FileManager(path)
+        archivo = fileManager.openFile("datos_generados.txt")
+        numbers = np.zeros(250000, dtype=np.int32)
         i = 0
-        with open(nom, 'r') as archivo:
-            for registro in archivo:
-                campos = registro.strip().split("#")
-                if not campos:
-                    continue
-                if i < 250000:
-                    rand = random.random()
-                    if rand < 0.5:
-                        if campos:
-                            numbers[i] = str(random.choice(campos))
-                            i += 1
-                else:
-                    break 
+        for registro in archivo:
+            campos = registro.strip().split("#")
+            if not campos:
+                continue
+            if i < 250000:
+                rand = random.random()
+                if rand < 0.5:
+                    if campos:
+                        numbers[i] = str(random.choice(campos))
+                        i += 1
+            else:
+                break 
         return numbers
     except FileNotFoundError:
         print(f"Error: No se encontró el archivo '{nom}'")
