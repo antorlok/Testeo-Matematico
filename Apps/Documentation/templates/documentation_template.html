@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8" />
+	<title>Documentación de Errores</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 40px;
+		}
+		h1, h2 {
+			color: #333;
+		}
+		.section {
+			margin-bottom: 30px;
+		}
+		ul {
+			list-style-type: square;
+		}
+	</style>
+</head>
+<body>
+	<h1>Documentación de Errores</h1>
+
+	<div class="section">
+		<h2>Errores por Iteración</h2>
+		<ul>
+			<li>Primera iteración: {{ firstIterationErrors }} errores</li>
+			<li>Segunda iteración: {{ secondIterationErrors }} errores</li>
+			<li>Tercera iteración: {{ thirdIterationErrors }} errores</li>
+			<li>Cuarta iteración: {{ fourthIterationErrors }} errores</li>
+			<li>Quinta iteración: {{ fifthIterationErrors }} errores</li>
+		</ul>
+	</div>
+
+	<div class="section">
+		<h2>Resultados</h2>
+		<ul>
+			<li>Suma total de errores: {{ summatoryErrorsResult }}</li>
+			<li>Promedio de errores: {{ avarageErrorsResults }}</li>
+		</ul>
+	</div>
+
+	<div class="section">
+		<h2>Diferencias y Cuadrados</h2>
+		<ul>
+			<li>Diferencia primera iteración: {{ firstDifference }}</li>
+			<li>Diferencia segunda iteración: {{ secondDifference }}</li>
+			<li>Diferencia tercera iteración: {{ thirdDifference }}</li>
+			<li>Diferencia cuarta iteración: {{ fourthDifference }}</li>
+			<li>Diferencia quinta iteración: {{ fifthDifference }}</li>
+		</ul>
+		<ul>
+			<li>Cuadrado diferencia primera iteración: {{ firstDifferenceSquare }}</li>
+			<li>Cuadrado diferencia segunda iteración: {{ secondDifferenceSquare }}</li>
+			<li>Cuadrado diferencia tercera iteración: {{ thirdDifferenceSquare }}</li>
+			<li>Cuadrado diferencia cuarta iteración: {{ fourthDifferenceSquare }}</li>
+			<li>Cuadrado diferencia quinta iteración: {{ fifthDifferenceSquare }}</li>
+		</ul>
+	</div>
+
+	<div class="section">
+		<h2>Distribución Normal Resultante</h2>
+		<p>La distribución queda definida por:</p>
+		<ul>
+			<li>&mu; (media) = 13.2 errores</li>
+			<li>&sigma; (desviación) ≈ 3.06 errores</li>
+		</ul>
+	</div>
+
+	<div class="section">
+		<h2>Imagen Final</h2>
+		<img src="{{ imagen_final }}" alt="Imagen final" width="520" height="260" />
+	</div>
+</body>
+</html>
