@@ -14,6 +14,7 @@ class FileManager:
     __path = os.getcwd()
 
     def __init__(self, path: str = os.getcwd()):
+        print(path)
         if len(path) == 0:
             raise Exception("Manage-Error: Debe ingresar una ruta")
         self.__path = self.__utilPath(path)

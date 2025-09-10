@@ -11,8 +11,10 @@ from Apps.Common.Helpers.FileReaders.NumberScanner import NumberScanner
 from datetime import datetime, timedelta
 import numpy as np
 from Apps.Common.Repositories.FileManager import FileManager
-
+from Apps.DataProcessor.DataExtractor.Extractor import start_process
+from Apps.DataProcessor.DataExtractor.Extractor import encode_image_to_base64
 from .Methods.RandomGraphUtils import *
+import base64
 
 last_access_times = {}
 
@@ -22,17 +24,25 @@ def randomGraph(request):
     try:
         client_ip = request.META.get('REMOTE_ADDR')
         current_time = datetime.now()
-
         if client_ip not in last_access_times:
             last_access_times[client_ip] = []
-        
         last_access_times[client_ip] = [
             t for t in last_access_times[client_ip] if current_time - t < timedelta(minutes=1)
         ]
-
         if len(last_access_times[client_ip]) >= 5:
-            alert_message = "Access limit exceeded: You can only visit this page 5 times per minute."
-            return render(request, 'index.html', {'alert_message': alert_message})
+            scatter_paths, linearPath, cubicPath, lagrangePath = start_process()
+            scatter_images = [encode_image_to_base64(p) for p in scatter_paths]
+            linear_img = encode_image_to_base64(linearPath)
+            cubic_img = encode_image_to_base64(cubicPath)
+            lagrange_img = encode_image_to_base64(lagrangePath)
+            context = {
+                'alert_message': "Access limit exceeded: You can only visit this page 5 times per minute.",
+                'scatter_images': scatter_images,
+                'linear_img': linear_img,
+                'cubic_img': cubic_img,
+                'lagrange_img': lagrange_img,
+            }
+            return render(request, 'graph.html', context)
         
         last_access_times[client_ip].append(current_time)
 

@@ -1,45 +1,40 @@
+from Apps.DataProcessor.DataExtractor.DataDivision import DataDivision
+from Apps.DataProcessor.DataExtractor.Interpolate import Interpolator
 import numpy as np
-import random
+import base64
 
-def ExtraxtContent(nom):
+def start_process():
+    archivo = ".\Apps\DataProcessor\DataExtractor\Data\datos_generados.txt"
+    data_divider = DataDivision(archivo, "#")
+    muestra = data_divider.setRandomSample(250000)
+    submuestras = data_divider.setSplitInFive(muestra)
+
+    data_list = []
+    i=0
+    path=[]
+    for submuestra in submuestras:
+        arr1, arr2 = data_divider.setSplitRandomArray(submuestra)
+        path.append(data_divider.getGraphic(arr1, arr2, i))
+        i+=1
+        print(i)
+        orden = np.argsort(arr1)
+        x = arr1[orden]
+        y = arr2[orden]
+        x_rounded = np.round(x, 0)
+        y_rounded = np.round(y, 0)
+        x_unique, idx_unique = np.unique(x_rounded, return_index=True)
+        y_unique = y_rounded[idx_unique]
+        data_list.append((x_unique, y_unique))
+    interpolador = Interpolator(data_list)
+    linarPath=interpolador.plot_interpolation(0, kind='linear')
+    cubicPath=interpolador.plot_interpolation(0, kind='cubic')
+    lagrangePath=interpolador.plot_interpolation(0, kind='lagrange')
+    return path, linarPath, cubicPath, lagrangePath 
+
+def encode_image_to_base64(path):
     try:
-        numbers = [None] * 250000 
-        i = 0
-        with open(nom, 'r') as archivo:
-            for registro in archivo:
-                campos = registro.strip().split("#")
-                if not campos:
-                    continue
-                if i < 250000:
-                    rand = random.random()
-                    if rand < 0.5:
-                        if campos:
-                            numbers[i] = str(random.choice(campos))
-                            i += 1
-                else:
-                    break 
-        return numbers
-    except FileNotFoundError:
-        print(f"Error: No se encontró el archivo '{nom}'")
-        return []
-
-
-def dividir_arreglo_aleatorio(arr):
-    mascara = np.random.rand(arr.size) < 0.5
-    arreglo1 = arr[mascara]
-    arreglo2 = arr[~mascara]
-    
-    max_len = max(arreglo1.size, arreglo2.size)
-    if arreglo1.size < max_len:
-        arreglo1 = np.pad(arreglo1, (0, max_len - arreglo1.size), constant_values=0)
-    if arreglo2.size < max_len:
-        arreglo2 = np.pad(arreglo2, (0, max_len - arreglo2.size), constant_values=0)
-    return arreglo1, arreglo2
-
-arreglo1, arreglo2 = dividir_arreglo_aleatorio(arreglo)
-print(f"Arreglo 1 tiene {arreglo1.size} elementos")
-print(f"Arreglo 2 tiene {arreglo2.size} elementos")
-
-
-for i in range(len(arreglo1)):
-    print(arreglo1[i],arreglo2[i])
+        with open(path, "rb") as image_file:
+            return base64.b64encode(image_file.read()).decode('utf-8')
+    except Exception as e:
+        print(f"Error leyendo imagen {path}: {e}")
+        return ""
