@@ -6,7 +6,7 @@ def contador(path):
     try:
         with open(path, 'r') as file:
             lines = file.readlines()
-            return len(lines)
+            return len(lines) if  len(lines) else 0
     except Exception as error:
         from errors import createLogFile
         createLogFile(fileManager   , error, error.__traceback__, "SystemOfEquationsSolver.__init__")
