@@ -30,7 +30,7 @@ def randomGraph(request):
             t for t in last_access_times[client_ip] if current_time - t < timedelta(minutes=1)
         ]
         if len(last_access_times[client_ip]) >= 5:
-            scatter_paths, linearPath, cubicPath, lagrangePath = start_process()
+            scatter_paths, linearPath, cubicPath, lagrangePath, equationResults = start_process()
             scatter_images = [encode_image_to_base64(p) for p in scatter_paths]
             linear_img = encode_image_to_base64(linearPath)
             cubic_img = encode_image_to_base64(cubicPath)

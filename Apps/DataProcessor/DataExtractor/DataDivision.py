@@ -54,3 +54,8 @@ class DataDivision():
         plt.close()
 
         return full_output_path
+    
+    def getBestFitLine(self, x, y):
+        m, b = np.polyfit(x, y, 1)
+        text= f"Ecuación de la recta de mejor ajuste: y = {m:.4f}x + {b:.4f}"
+        return text

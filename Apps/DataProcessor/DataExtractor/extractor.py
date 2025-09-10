@@ -8,7 +8,7 @@ def start_process():
     data_divider = DataDivision(archivo, "#")
     muestra = data_divider.setRandomSample(250000)
     submuestras = data_divider.setSplitInFive(muestra)
-
+    equation = []
     data_list = []
     i=0
     path=[]
@@ -25,11 +25,12 @@ def start_process():
         x_unique, idx_unique = np.unique(x_rounded, return_index=True)
         y_unique = y_rounded[idx_unique]
         data_list.append((x_unique, y_unique))
+        equation.append(data_divider.getBestFitLine(x, y))
     interpolador = Interpolator(data_list)
     linarPath=interpolador.plot_interpolation(0, kind='linear')
     cubicPath=interpolador.plot_interpolation(0, kind='cubic')
     lagrangePath=interpolador.plot_interpolation(0, kind='lagrange')
-    return path, linarPath, cubicPath, lagrangePath 
+    return path, linarPath, cubicPath, lagrangePath, equation 
 
 def encode_image_to_base64(path):
     try:
