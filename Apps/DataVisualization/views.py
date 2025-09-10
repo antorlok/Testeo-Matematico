@@ -14,12 +14,12 @@ from Apps.Common.Repositories.FileManager import FileManager
 from Apps.DataProcessor.DataExtractor.Extractor import start_process
 from Apps.DataProcessor.DataExtractor.Extractor import encode_image_to_base64
 from .Methods.RandomGraphUtils import *
-import base64
+from Apps.Common.Repositories.Errors.NumberofErrors import contador
 
 last_access_times = {}
 
 def randomGraph(request):
-    path = ".\Apps\Common\Repositories\Errors"
+    path = "Apps\Common\Repositories\Errors"
     fileManager = FileManager(path)
     try:
         client_ip = request.META.get('REMOTE_ADDR')
@@ -67,7 +67,7 @@ def randomGraph(request):
         report.writeFormulasAndResults(formulas, equationResults)
         report.writeSystemsAndSolutions(equationResults, points)
         report.writeDistancesBetweenPoints(points)
-        
+        numberOfErrors=contador("Apps\Common\Repositories\Errors\error.log")
 
         plot_results = [p.toDict() for p in points]
         context = {
