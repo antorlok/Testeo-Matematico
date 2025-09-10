@@ -7,29 +7,63 @@ def generate_pdf():
     env = Environment(loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")))
     template = env.get_template("documentation_template.html")
 
-    # Diccionario con los datos para la plantilla
+    # Diccionario con los datos para la plantilla (adaptado a la nueva estructura)
+    imagen_final = "file:///" + os.path.abspath(os.path.join(os.path.dirname(__file__), "cap.png")).replace("\\", "/")
     context = {
-        "firstIterationErrors": 12,
-        "secondIterationErrors": 15,
-        "thirdIterationErrors": 10,
-        "fourthIterationErrors": 14,
-        "fifthIterationErrors": 15,
+        "iteraciones": [
+            {
+                "nombre": "Primera iteración",
+                "puntos": 1,
+                "intervalo": "[0, 10]",
+                "recta": "y = 2x + 1",
+                "imagen": imagen_final,
+                "errores": 12
+            },
+            {
+                "nombre": "Segunda iteración",
+                "puntos": 2,
+                "intervalo": "[10, 20]",
+                "recta": "y = 1.5x + 2",
+                "imagen": imagen_final,
+                "errores": 15
+            },
+            {
+                "nombre": "Tercera iteración",
+                "puntos": 1,
+                "intervalo": "[20, 30]",
+                "recta": "y = x + 3",
+                "imagen": imagen_final,
+                "errores": 10
+            },
+            {
+                "nombre": "Cuarta iteración",
+                "puntos": 1,
+                "intervalo": "[30, 40]",
+                "recta": "y = 0.5x + 4",
+                "imagen": imagen_final,
+                "errores": 14
+            },
+            {
+                "nombre": "Quinta iteración",
+                "puntos": 1,
+                "intervalo": "[40, 50]",
+                "recta": "y = 0.2x + 5",
+                "imagen": imagen_final,
+                "errores": 15
+            }
+        ],
+        "total_puntos": 2000000,
+        "tipo_interpolacion": "Lineal",
+        "resultado_interpolacion": "y = 1.2x + 0.8",
+        "imagen_interpolacion": imagen_final,
         "summatoryErrorsResult": 66,
         "avarageErrorsResults": 13.2,
-        "firstDifference": -1.2,
-        "secondDifference": 1.8,
-        "thirdDifference": -3.2,
-        "fourthDifference": 0.8,
-        "fifthDifference": 1.8,
-        "firstDifferenceSquare": 1.44,
-        "secondDifferenceSquare": 3.24,
-        "thirdDifferenceSquare": 10.24,
-        "fourthDifferenceSquare": 0.64,
-        "fifthDifferenceSquare": 3.24,
-        "variance": 3.76,
-        "desviacion": 1.94,
-        # Ruta absoluta de la imagen final, compatible con wkhtmltopdf y sin espacios
-        "imagen_final": "file:///" + os.path.abspath(os.path.join(os.path.dirname(__file__), "cap.png")).replace("\\", "/"),
+        "media": 13.2,
+        "desviacion": 3.06,
+        "rango_68": {"inferior": 10, "superior": 16},
+        "rango_95": {"inferior": 7, "superior": 19},
+        "rango_98": {"inferior": 5, "superior": 21},
+        "imagen_distribucion": imagen_final
     }
 
     # Renderizar la plantilla con los datos

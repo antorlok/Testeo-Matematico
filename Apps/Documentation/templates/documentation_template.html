@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 	<meta charset="UTF-8" />
-	<title>Documentación de Errores</title>
+	<title>Documentación Matemática</title>
 	<style>
 		body {
 			font-family: Arial, sans-serif;
@@ -20,57 +20,70 @@
 	</style>
 </head>
 <body>
-	<h1>Documentación de Errores</h1>
-
+	<h1><strong>Documentaci&oacute;n Matem&aacute;tica</strong></h1>
+	<hr />
 	<div class="section">
-		<h2>Errores por Iteración</h2>
+		<h2>Distribuci&oacute;n de puntos por iteraci&oacute;n</h2>
+		{% for iter in iteraciones %}
+		<p><strong>{{ iter.nombre }}</strong></p>
+		<p>N&uacute;mero de puntos procesados: {{ iter.puntos }}</p>
+		<p>Int&eacute;rvalo de puntos: {{ iter.intervalo }}</p>
+		<p>Recta de mejor ajuste: {{ iter.recta }}</p>
+		<img src="{{ iter.imagen }}" alt="Imagen final" width="520" height="260" />
+		{% endfor %}
+		<h2>Interpolaci&oacute;n Total</h2>
+		<div class="section">
+			<h3>Interpolaci&oacute;n Lineal</h3>
+			<p>Tipo de interpolaci&oacute;n: Lineal</p>
+			<p>Puntos procesados: {{ puntos_interpolacion_lineal }}</p>
+			<p>Resultado: {{ resultado_interpolacion_lineal }}</p>
+			<p><img src="{{ imagen_interpolacion_lineal }}" alt="Imagen Lineal" width="520" height="260" /></p>
+		</div>
+		<div class="section">
+			<h3>Interpolaci&oacute;n C&uacute;bica</h3>
+			<p>Tipo de interpolaci&oacute;n: C&uacute;bica</p>
+			<p>Puntos procesados: {{ puntos_interpolacion_cubica }}</p>
+			<p>Resultado: {{ resultado_interpolacion_cubica }}</p>
+			<p><img src="{{ imagen_interpolacion_cubica }}" alt="Imagen C&uacute;bica" width="520" height="260" /></p>
+		</div>
+		<div class="section">
+			<h3>Interpolaci&oacute;n de Lagrange</h3>
+			<p>Tipo de interpolaci&oacute;n: Lagrange</p>
+			<p>Puntos procesados: {{ puntos_interpolacion_lagrange }}</p>
+			<p>Resultado: {{ resultado_interpolacion_lagrange }}</p>
+			<p><img src="{{ imagen_interpolacion_lagrange }}" alt="Imagen Lagrange" width="520" height="260" /></p>
+		</div>
+		<h2>Errores por Iteraci&oacute;n</h2>
 		<ul>
-			<li>Primera iteración: {{ firstIterationErrors }} errores</li>
-			<li>Segunda iteración: {{ secondIterationErrors }} errores</li>
-			<li>Tercera iteración: {{ thirdIterationErrors }} errores</li>
-			<li>Cuarta iteración: {{ fourthIterationErrors }} errores</li>
-			<li>Quinta iteración: {{ fifthIterationErrors }} errores</li>
+			{% for iter in iteraciones %}
+				<li>{{ iter.nombre }}: {{ iter.errores }} errores</li>
+			{% endfor %}
 		</ul>
-	</div>
-
-	<div class="section">
-		<h2>Resultados</h2>
-		<ul>
-			<li>Suma total de errores: {{ summatoryErrorsResult }}</li>
-			<li>Promedio de errores: {{ avarageErrorsResults }}</li>
-		</ul>
-	</div>
-
-	<div class="section">
-		<h2>Diferencias y Cuadrados</h2>
-		<ul>
-			<li>Diferencia primera iteración: {{ firstDifference }}</li>
-			<li>Diferencia segunda iteración: {{ secondDifference }}</li>
-			<li>Diferencia tercera iteración: {{ thirdDifference }}</li>
-			<li>Diferencia cuarta iteración: {{ fourthDifference }}</li>
-			<li>Diferencia quinta iteración: {{ fifthDifference }}</li>
-		</ul>
-		<ul>
-			<li>Cuadrado diferencia primera iteración: {{ firstDifferenceSquare }}</li>
-			<li>Cuadrado diferencia segunda iteración: {{ secondDifferenceSquare }}</li>
-			<li>Cuadrado diferencia tercera iteración: {{ thirdDifferenceSquare }}</li>
-			<li>Cuadrado diferencia cuarta iteración: {{ fourthDifferenceSquare }}</li>
-			<li>Cuadrado diferencia quinta iteración: {{ fifthDifferenceSquare }}</li>
-		</ul>
-	</div>
-
-	<div class="section">
-		<h2>Distribución Normal Resultante</h2>
-		<p>La distribución queda definida por:</p>
-		<ul>
-			<li>&mu; (media) = 13.2 errores</li>
-			<li>&sigma; (desviación) ≈ 3.06 errores</li>
-		</ul>
-	</div>
-
-	<div class="section">
-		<h2>Imagen Final</h2>
-		<img src="{{ imagen_final }}" alt="Imagen final" width="520" height="260" />
-	</div>
-</body>
-</html>
+		<div class="section">
+			<h2>Resultados</h2>
+			<ul>
+				<li>Suma total de errores: {{ summatoryErrorsResult }}</li>
+				<li>Promedio de errores: {{ avarageErrorsResults }}</li>
+			</ul>
+		</div>
+		<div class="section">
+			<h2>Distribuci&oacute;n Normal de los Errores</h2>
+			<p>La distribuci&oacute;n queda definida por:</p>
+			<ul>
+				<li>&mu; (media) = {{ media }} errores</li>
+				<li>&sigma; (desviaci&oacute;n) &asymp; {{ desviacion }} errores</li>
+			</ul>
+		</div>
+		<div class="section">
+			<h2>Rangos Clave</h2>
+			<p>Seg&uacute;n los c&aacute;lculos, podemos deducir que el programa tendr&aacute; el siguiente comportamiento:</p>
+			<ul>
+				<li>El 68% de las iteraciones tendr&aacute; entre {{ rango_68.inferior }} y {{ rango_68.superior }} errores</li>
+				<li>El 95% de las iteraciones tendr&aacute; entre {{ rango_95.inferior }} y {{ rango_95.superior }} errores</li>
+				<li>El 98% de las iteraciones tendr&aacute; entre {{ rango_98.inferior }} y {{ rango_98.superior }} errores</li>
+			</ul>
+			<h2>Gr&aacute;fica de la Distribuci&oacute;n</h2>
+			<img src="{{ imagen_distribucion }}" alt="Imagen final" width="520" height="260" /></div>
+		</body>
+		</html>
+		
